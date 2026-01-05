@@ -1,0 +1,25 @@
+:root {
+  --font-geist-sans: "Arial", sans-serif;
+  --font-geist-mono: "Courier New", monospace;
+  --foreground: #333;
+  --background: #f7f9fc;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
