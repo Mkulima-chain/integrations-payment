@@ -1,6 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./page.module.css";
-import CheckoutButton from "@/components/CheckoutButton";
 
 export default function Home() {
   return (
@@ -28,7 +28,9 @@ export default function Home() {
               <span className={styles.files}>Livraison immédiate</span>
             </div>
             <div className={styles.action}>
-              <CheckoutButton />
+              <Link href="/checkout" className={styles.checkoutButton}>
+                Payer avec Stripe
+              </Link>
             </div>
           </div>
         </div>
