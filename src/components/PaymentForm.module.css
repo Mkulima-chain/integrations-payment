@@ -1,0 +1,83 @@
+.form {
+    width: 100%;
+}
+
+.paymentElement {
+    margin-bottom: 24px;
+}
+
+.payButton {
+    width: 100%;
+    background: linear-gradient(135deg, #635bff 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(99, 91, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.payButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 91, 255, 0.4);
+}
+
+.payButton:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.payButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.lockIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.errorMessage {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.poweredBy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: #8898aa;
+}
+
+.stripeLogo {
+    height: 15px;
+}

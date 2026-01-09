@@ -1,6 +1,5 @@
 :root {
-  --font-geist-sans: "Arial", sans-serif;
-  --font-geist-mono: "Courier New", monospace;
+  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --foreground: #333;
   --background: #f7f9fc;
 }
@@ -14,7 +13,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

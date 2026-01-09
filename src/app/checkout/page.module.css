@@ -1,0 +1,233 @@
+.page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.lockIcon {
+    width: 24px;
+    height: 24px;
+    color: #1a1f36;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1f36;
+    margin: 0;
+}
+
+.orderSummary {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s ease;
+}
+
+.orderSummary:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.summaryTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1f36;
+    margin: 0 0 16px 0;
+}
+
+.productInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.productDetails {
+    flex: 1;
+}
+
+.productName {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1f36;
+    margin: 0 0 4px 0;
+}
+
+.productDescription {
+    font-size: 13px;
+    color: #8898aa;
+    margin: 0;
+}
+
+.productPrice {
+    display: flex;
+    align-items: center;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1f36;
+}
+
+.divider {
+    height: 1px;
+    background: #e6ebf1;
+    margin: 16px 0;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totalLabel {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1f36;
+}
+
+.totalAmount {
+    font-size: 20px;
+    font-weight: 700;
+    color: #635bff;
+}
+
+.paymentCard {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s ease;
+}
+
+.paymentCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    gap: 16px;
+}
+
+.loadingContainer p {
+    color: #8898aa;
+    font-size: 14px;
+    margin: 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e6ebf1;
+    border-top-color: #635bff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.errorContainer {
+    padding: 20px 0;
+}
+
+.errorText {
+    color: #df1b41;
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+}
+
+.cardLogos {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.cardLogosImage {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.cardLogosImage:hover {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .page {
+        padding: 16px 12px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .orderSummary,
+    .paymentCard {
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+}
+
+/* Mobile-first optimizations */
+@media (max-width: 375px) {
+    .header {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .productInfo {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .productPrice {
+        align-self: flex-start;
+    }
+}
