@@ -21,7 +21,7 @@ export default function CheckoutPage() {
         fetch('/api/create-payment-intent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: 2000 }), // 20.00 EUR
+            body: JSON.stringify({}), // Plus besoin d'envoyer le montant d'ici !
         })
             .then((res) => {
                 if (!res.ok) {

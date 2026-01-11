@@ -2,7 +2,7 @@
 
 Projet de démonstration d'intégration de paiements Stripe avec **Next.js 14+** (App Router) et **TypeScript**.
 
-Ce projet sert de base solide pour comprendre comment initier des sessions de paiement sécurisées (Checkout) via l'API Stripe.
+
 
 ## 🚀 Fonctionnalités
 - **Next.js App Router** : Architecture moderne et performante.
