@@ -1,195 +1,175 @@
-import Image from "next/image";
-import Link from "next/link";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import Link from 'next/link';
+import CheckoutButton from '@/components/CheckoutButton';
+import styles from './page.module.css';
+
+const SCENARIOS = [
+  {
+    id: 'spotify',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+      </svg>
+    ),
+    title: 'Spotify Style',
+    description: 'Musique en illimité partout. Abonnez-vous pour écouter vos chansons préférées sans publicité.',
+    price: '10.99',
+    period: '/mois',
+    type: 'checkout'
+  },
+  {
+    id: 'livraison',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="1" y="3" width="15" height="13" />
+        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+        <circle cx="5.5" cy="18.5" r="2.5" />
+        <circle cx="18.5" cy="18.5" r="2.5" />
+      </svg>
+    ),
+    title: 'Livraison Bio',
+    description: 'Vos fruits et légumes frais livrés chez vous. Simple, rapide et bon pour la santé.',
+    price: '25.00',
+    period: '€ total',
+    type: 'elements'
+  },
+  {
+    id: 'cloud',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17.5 19l.5-11a5 5 0 0 0-10 0l.5 11" />
+        <path d="M4.5 19h15" />
+      </svg>
+    ),
+    title: 'Coffre-fort Numérique',
+    description: 'Gardez vos photos et documents en sécurité. Accédez-y sur tous vos appareils, n\'importe où.',
+    price: '5.00',
+    period: '/mois',
+    type: 'checkout'
+  },
+  {
+    id: 'gadget',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+      </svg>
+    ),
+    title: 'Gadget Tech',
+    description: 'La technologie dernier cri entre vos mains. Commandez votre nouvel accessoire préféré.',
+    price: '150.00',
+    period: '€ total',
+    type: 'elements'
+  }
+];
+
+export default function HomePage() {
+  const [activeTab, setActiveTab] = useState('payments');
+
   return (
-    <div className={styles.page}>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <div className={styles.heroText}>
-            <h1 className={styles.heroTitle}>
-              Intégration Stripe & Next.js
-              <span className={styles.gradient}> Simplifiée</span>
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Apprenez à intégrer des paiements sécurisés avec Stripe dans vos applications Next.js.
-              Code source complet, TypeScript, et bonnes pratiques inclus.
-            </p>
+    <main className={styles.page}>
+      <div className={styles.container}>
+        {/* Header Section */}
+        <header className={styles.header}>
+          <h1 className={styles.title}>Reussissez vos paiements en ligne avec Stripe</h1>
+          <p className={styles.subtitle}>
+            Encaisser de l’argent en ligne ne doit pas être compliqué.
+            Avec Stripe, tout se fait en quelques secondes, de manière simple et totalement sécurisée.
+          </p>
+        </header>
 
-            <div className={styles.heroBadges}>
-              <div className={styles.badge}>
-                <svg className={styles.badgeIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span>Paiement Sécurisé</span>
+        {/* Tabs Navigation */}
+        <nav className={styles.tabs}>
+          <button
+            className={`${styles.tab} ${activeTab === 'info' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('info')}
+          >
+            Comment ça marche ?
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'payments' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('payments')}
+          >
+            Paiements
+          </button>
+        </nav>
+
+        {/* Content based on Tabs */}
+        {activeTab === 'payments' ? (
+          <div className={styles.grid}>
+            {SCENARIOS.map((scenario) => (
+              <div key={scenario.id} className={`${styles.card} glass-card`}>
+                <div className={styles.cardIcon}>{scenario.icon}</div>
+                <div className={styles.cardHeader}>
+                  <h3 className={styles.cardTitle}>{scenario.title}</h3>
+                  <p className={styles.cardDescription}>{scenario.description}</p>
+                </div>
+                <div className={styles.cardPrice}>
+                  €{scenario.price}<span>{scenario.period}</span>
+                </div>
+
+                {scenario.id === 'spotify' || scenario.id === 'cloud' ? (
+                  <CheckoutButton
+                    productId={scenario.id}
+                    className={`${styles.button} ${styles.buttonPrimary}`}
+                    label="Démarrer"
+                  />
+                ) : (
+                  <Link
+                    href="/checkout"
+                    className={`${styles.button} ${styles.buttonPrimary}`}
+                  >
+                    Acheter maintenant
+                  </Link>
+                )}
               </div>
-              <div className={styles.badge}>
-                <svg className={styles.badgeIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span>Livraison Immédiate</span>
+            ))}
+          </div>
+        ) : (
+          <section className={styles.infoSection}>
+            <h2 className={styles.infoTitle}>Recevez des paiements facilement avec Stripe</h2>
+            <div className={styles.infoGrid}>
+              <div className={styles.infoStep}>
+                <span className={styles.stepNumber}>1</span>
+                <h4 className={styles.stepTitle}>Le client clique sur « Payer »</h4>
+                <p className={styles.stepText}>
+                  Dès qu’il clique, Stripe est informé qu’un paiement va arriver et se prépare automatiquement.
+                </p>
               </div>
-              <div className={styles.badge}>
-                <svg className={styles.badgeIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span>Documentation Complète</span>
+              <div className={styles.infoStep}>
+                <span className={styles.stepNumber}>2</span>
+                <h4 className={styles.stepTitle}>Le client paie en toute confiance</h4>
+                <p className={styles.stepText}>
+                  Il entre ses informations de paiement directement sur votre site, dans un espace sécurisé.
+                  Ses données sont protégées et restent privées.
+                </p>
+              </div>
+              <div className={styles.infoStep}>
+                <span className={styles.stepNumber}>3</span>
+                <h4 className={styles.stepTitle}>Le paiement est validé</h4>
+                <p className={styles.stepText}>
+                  Stripe vérifie tout, confirme le paiement et vous prévient immédiatement.
+                  C’est fait : vous êtes payé ✔️
+                </p>
               </div>
             </div>
 
-            <div className={styles.heroActions}>
-              <Link href="/checkout" className={styles.ctaPrimary}>
-                <svg className={styles.lockIcon} width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Acheter Maintenant - 20€
-              </Link>
-              <a href="#features" className={styles.ctaSecondary}>
-                En Savoir Plus
-              </a>
+            <div style={{ marginTop: '60px', textAlign: 'center' }}>
+              <div>
+                <p style={{ fontWeight: '700', fontSize: '20px', color: 'var(--slate-900)', marginBottom: '8px' }}>🚀 Simple, rapide et fiable</p>
+                <p style={{ color: 'var(--slate-500)', maxWidth: '500px', margin: '0 auto' }}>Stripe s’occupe de la technique pour que vous puissiez vous concentrer sur ce qui compte vraiment : vendre, servir et grandir.</p>
+              </div>
             </div>
-          </div>
+          </section>
+        )}
 
-          <div className={styles.heroImage}>
-            <Image
-              src="/product-hero.png"
-              alt="Stripe & Next.js Integration"
-              width={600}
-              height={450}
-              priority
-              className={styles.productImage}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className={styles.features}>
-        <h2 className={styles.sectionTitle}>Ce que vous obtenez</h2>
-        <div className={styles.featuresGrid}>
-          <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <h3 className={styles.featureTitle}>Code TypeScript</h3>
-            <p className={styles.featureDescription}>
-              Code source complet avec TypeScript pour une intégration type-safe et maintenable.
-            </p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <h3 className={styles.featureTitle}>Stripe Elements</h3>
-            <p className={styles.featureDescription}>
-              Intégration complète de Stripe avec PaymentIntents et Elements pour une UX optimale.
-            </p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <h3 className={styles.featureTitle}>Next.js 16</h3>
-            <p className={styles.featureDescription}>
-              Utilise les dernières fonctionnalités de Next.js avec App Router et Server Components.
-            </p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <h3 className={styles.featureTitle}>Sécurité PCI</h3>
-            <p className={styles.featureDescription}>
-              Implémentation conforme PCI-DSS avec gestion sécurisée des paiements par Stripe.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Product Details Section */}
-      <section className={styles.productSection}>
-        <div className={styles.productCard}>
-          <div className={styles.productHeader}>
-            <h2 className={styles.productTitle}>Pack Premium Intégration</h2>
-            <div className={styles.priceTag}>
-              <span className={styles.price}>20.00 €</span>
-              <span className={styles.priceLabel}>Paiement unique</span>
-            </div>
-          </div>
-
-          <div className={styles.productFeatures}>
-            <div className={styles.productFeature}>
-              <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M5 13l4 4L19 7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>Code source complet Next.js + Stripe</span>
-            </div>
-            <div className={styles.productFeature}>
-              <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M5 13l4 4L19 7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>Support TypeScript intégré</span>
-            </div>
-            <div className={styles.productFeature}>
-              <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M5 13l4 4L19 7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>Documentation et bonnes pratiques</span>
-            </div>
-            <div className={styles.productFeature}>
-              <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M5 13l4 4L19 7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>Exemples de PaymentIntents et Elements</span>
-            </div>
-            <div className={styles.productFeature}>
-              <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M5 13l4 4L19 7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>Livraison immédiate après paiement</span>
-            </div>
-          </div>
-
-          <Link href="/checkout" className={styles.productCta}>
-            Procéder au Paiement Sécurisé
-          </Link>
-        </div>
-      </section>
-
-      {/* Tech Stack */}
-      <section className={styles.techStack}>
-        <p className={styles.techLabel}>Propulsé par</p>
-        <div className={styles.techLogos}>
-          <div className={styles.techLogo}>Next.js</div>
-          <div className={styles.techLogo}>Stripe</div>
-          <div className={styles.techLogo}>TypeScript</div>
-          <div className={styles.techLogo}>React</div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <p>© 2026 Stripe & Next.js Integration. Tous droits réservés.</p>
-        <p className={styles.footerSecure}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="currentColor" strokeWidth="2" />
-          </svg>
-          Paiements sécurisés par Stripe
-        </p>
-      </footer>
-    </div>
+        <footer className={styles.footer}>
+          {/* Footer content removed as requested */}
+        </footer>
+      </div>
+    </main>
   );
 }

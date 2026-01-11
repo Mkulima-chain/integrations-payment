@@ -1,11 +1,11 @@
 .page {
     min-height: 100vh;
-    background-color: #f9fafb;
-    padding: 24px 16px;
+    background-color: var(--background);
+    padding: 40px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-inter);
 }
 
 .container {
@@ -19,28 +19,17 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #6b7c93;
+    color: var(--slate-500);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 24px;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .backButton:hover {
-    color: #1a1f36;
-}
-
-.logoContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 32px;
-}
-
-.logo {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
+    color: var(--primary);
+    transform: translateX(-4px);
 }
 
 .header {
@@ -54,128 +43,75 @@
 .lockIcon {
     width: 24px;
     height: 24px;
-    color: #1a1f36;
+    color: var(--primary);
 }
 
 .title {
     font-size: 28px;
-    font-weight: 700;
-    color: #1a1f36;
+    font-weight: 800;
+    color: var(--slate-900);
     margin: 0;
+    letter-spacing: -0.5px;
 }
 
-.orderSummary {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+.orderSummary,
+.paymentCard {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: var(--shadow);
     margin-bottom: 24px;
-    transition: box-shadow 0.2s ease;
-}
-
-.orderSummary:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid #f1f5f9;
 }
 
 .summaryTitle {
     font-size: 16px;
-    font-weight: 600;
-    color: #1a1f36;
-    margin: 0 0 16px 0;
-}
-
-.productInfo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 16px;
-}
-
-.productDetails {
-    flex: 1;
+    font-weight: 700;
+    color: var(--slate-900);
+    margin: 0 0 20px 0;
 }
 
 .productName {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1a1f36;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--slate-900);
     margin: 0 0 4px 0;
 }
 
 .productDescription {
-    font-size: 13px;
-    color: #8898aa;
+    font-size: 14px;
+    color: var(--slate-500);
     margin: 0;
-}
-
-.productPrice {
-    display: flex;
-    align-items: center;
 }
 
 .price {
     font-size: 18px;
-    font-weight: 600;
-    color: #1a1f36;
+    font-weight: 700;
+    color: var(--slate-900);
 }
 
 .divider {
     height: 1px;
-    background: #e6ebf1;
-    margin: 16px 0;
-}
-
-.totalRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background: #f1f5f9;
+    margin: 20px 0;
 }
 
 .totalLabel {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a1f36;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .totalAmount {
-    font-size: 20px;
-    font-weight: 700;
-    color: #10b981;
-}
-
-.paymentCard {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: 24px;
-    transition: box-shadow 0.2s ease;
-}
-
-.paymentCard:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.loadingContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 0;
-    gap: 16px;
-}
-
-.loadingContainer p {
-    color: #8898aa;
-    font-size: 14px;
-    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
 }
 
 .spinner {
     width: 40px;
     height: 40px;
-    border: 4px solid #e6ebf1;
-    border-top-color: #10b981;
+    border: 3px solid var(--primary-light);
+    border-top-color: var(--primary);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
@@ -186,65 +122,17 @@
     }
 }
 
-.errorContainer {
-    padding: 20px 0;
-}
-
-.errorText {
-    color: #df1b41;
-    font-size: 14px;
-    text-align: center;
-    margin: 0;
-}
-
 .cardLogos {
     display: flex;
     justify-content: center;
-    margin-top: 24px;
+    margin-top: 32px;
+    opacity: 0.5;
 }
 
-.cardLogosImage {
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
-}
-
-.cardLogosImage:hover {
-    opacity: 1;
-}
-
-/* Responsive Design */
-@media (max-width: 640px) {
-    .page {
-        padding: 16px 12px;
-    }
-
-    .title {
-        font-size: 24px;
-    }
+@media (max-width: 480px) {
 
     .orderSummary,
     .paymentCard {
-        padding: 20px;
-    }
-
-    .container {
-        max-width: 100%;
-    }
-}
-
-/* Mobile-first optimizations */
-@media (max-width: 375px) {
-    .header {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .productInfo {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .productPrice {
-        align-self: flex-start;
+        padding: 24px;
     }
 }

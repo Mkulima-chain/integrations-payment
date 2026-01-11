@@ -1,5 +1,8 @@
 'use client';
 
+import Link from 'next/link';
+import { MouseEvent } from 'react';
+
 export default function PaymentSuccessPage() {
     return (
         <div style={{
@@ -57,33 +60,24 @@ export default function PaymentSuccessPage() {
                 }}>
                     Thank you for your purchase. Your payment has been processed successfully.
                 </p>
-                <a
+                <Link
                     href="/"
                     style={{
                         display: 'inline-block',
-                        backgroundColor: '#10b981',
+                        background: 'linear-gradient(135deg, #635bff 0%, #7c3aed 100%)',
                         color: 'white',
                         padding: '12px 32px',
                         borderRadius: '8px',
                         textDecoration: 'none',
                         fontWeight: '600',
                         fontSize: '16px',
-                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)',
-                        transition: 'all 0.2s ease',
+                        transition: 'transform 0.2s ease',
                     }}
-                    onMouseOver={(e) => {
-                        e.currentTarget.style.backgroundColor = '#059669';
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.3)';
-                    }}
-                    onMouseOut={(e) => {
-                        e.currentTarget.style.backgroundColor = '#10b981';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.2)';
-                    }}
+                    onMouseOver={(e: MouseEvent<HTMLAnchorElement>) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                    onMouseOut={(e: MouseEvent<HTMLAnchorElement>) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                     Return to Home
-                </a>
+                </Link>
             </div>
         </div>
     );

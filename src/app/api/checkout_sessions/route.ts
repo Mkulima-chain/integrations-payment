@@ -1,37 +1,46 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 
-export async function POST() {
+// --- DICTIONNAIRE DE PRIX SÉCURISÉ ---
+// ANALYSE : On ne laisse jamais le client envoyer le prix.
+// On reçoit un ID et on cherche le prix correspondant ici.
+const PRODUCTS: Record<string, { name: string; amount: number; mode: 'payment' | 'subscription' }> = {
+    spotify: { name: 'Spotify Premium (Simulé)', amount: 1099, mode: 'payment' }, // Paiement simple pour la démo
+    livraison: { name: 'Panier Fraîcheur Bio', amount: 2500, mode: 'payment' },
+    cloud: { name: 'Stockage Cloud Pro (Mensuel)', amount: 500, mode: 'payment' },
+    gadget: { name: 'Casque Audio Hi-Fi', amount: 15000, mode: 'payment' }
+};
+
+export async function POST(req: Request) {
     try {
-        // Create Checkout Sessions from body params.
+        const { productId } = await req.json();
+        const product = PRODUCTS[productId] || PRODUCTS.gadget;
+
         const session = await stripe.checkout.sessions.create({
             line_items: [
                 {
-                    // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    // For this demo, we'll use a dynamic price_data
                     price_data: {
                         currency: 'eur',
                         product_data: {
-                            name: 'Produit de Démonstration',
-                            description: 'Un super produit créé avec Stripe et Next.js',
-                            images: ['https://placehold.co/600x400'],
+                            name: product.name,
+                            description: `Intégration Stripe pour ${product.name}`,
                         },
-                        unit_amount: 2000, // 20.00 EUR
+                        unit_amount: product.amount,
                     },
                     quantity: 1,
                 },
             ],
-            mode: 'payment',
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/?success=true`,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/?canceled=true`,
+            mode: product.mode,
+            success_url: `${req.headers.get('origin')}/payment-success`,
+            cancel_url: `${req.headers.get('origin')}/`,
         });
 
-        return NextResponse.json({ url: session.url, sessionId: session.id });
+        return NextResponse.json({ url: session.url });
     } catch (err: unknown) {
         console.error('Error creating checkout session:', err);
-        const errorMessage = err instanceof Error ? err.message : 'Internal Server Error';
+        const error = err as { message?: string };
         return NextResponse.json(
-            { error: errorMessage },
+            { error: error.message || 'Internal Server Error' },
             { status: 500 }
         );
     }
