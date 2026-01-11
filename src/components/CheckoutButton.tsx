@@ -1,12 +1,23 @@
 'use client';
 
+import { useState } from 'react';
 
+interface CheckoutButtonProps {
+    productId: string;
+    className?: string;
+    label?: string;
+}
 
-export default function CheckoutButton() {
+export default function CheckoutButton({ productId, className, label = 'Payer avec Stripe' }: CheckoutButtonProps) {
+    const [loading, setLoading] = useState(false);
+
     const handleCheckout = async () => {
+        setLoading(true);
         try {
             const response = await fetch('/api/checkout_sessions', {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId }),
             });
 
             if (!response.ok) {
@@ -14,7 +25,7 @@ export default function CheckoutButton() {
             }
 
             const { url } = await response.json();
-            
+
             if (url) {
                 window.location.href = url;
             } else {
@@ -22,28 +33,19 @@ export default function CheckoutButton() {
             }
         } catch (error) {
             console.error('Error during checkout:', error);
+            alert('Une erreur est survenue lors de la redirection vers Stripe.');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <button
             onClick={handleCheckout}
-            style={{
-                backgroundColor: '#635bff',
-                color: '#ffffff',
-                padding: '12px 24px',
-                border: 'none',
-                borderRadius: '4px',
-                fontSize: '16px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)',
-                transition: 'all 0.15s ease',
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
-            onMouseOut={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+            disabled={loading}
+            className={className}
         >
-            Payer avec Stripe
+            {loading ? 'Redirection...' : label}
         </button>
     );
 }

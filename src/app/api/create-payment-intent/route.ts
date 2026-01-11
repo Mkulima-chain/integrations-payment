@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 
-export async function POST(req: Request) {
+export async function POST(_req: Request) {
     try {
         // --- MISSION SÉCURITÉ ---
         // ANALYSE : Auparavant, nous lisions "amount" depuis req.json().
@@ -27,11 +27,12 @@ export async function POST(req: Request) {
         return NextResponse.json({
             clientSecret: paymentIntent.client_secret,
         });
-    } catch (err: any) {
-        console.error('Error creating payment intent:', err);
+    } catch (err: unknown) {
+        const error = err as { message?: string; statusCode?: number };
+        console.error('Error creating payment intent:', error);
         return NextResponse.json(
-            { error: err.message },
-            { status: err.statusCode || 500 }
+            { error: error.message || 'Une erreur est survenue' },
+            { status: error.statusCode || 500 }
         );
     }
 }
