@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 
-export async function POST(req: Request) {
+export async function POST() {
     try {
         // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({
@@ -26,12 +26,13 @@ export async function POST(req: Request) {
             cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/?canceled=true`,
         });
 
-        return NextResponse.json({ sessionId: session.id });
-    } catch (err: any) {
+        return NextResponse.json({ url: session.url, sessionId: session.id });
+    } catch (err: unknown) {
         console.error('Error creating checkout session:', err);
+        const errorMessage = err instanceof Error ? err.message : 'Internal Server Error';
         return NextResponse.json(
-            { error: err.message },
-            { status: err.statusCode || 500 }
+            { error: errorMessage },
+            { status: 500 }
         );
     }
 }

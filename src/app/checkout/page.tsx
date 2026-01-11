@@ -5,6 +5,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import PaymentForm from '@/components/PaymentForm';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 const stripePromise = loadStripe(
@@ -59,6 +60,13 @@ export default function CheckoutPage() {
     return (
         <div className={styles.page}>
             <div className={styles.container}>
+                <Link href="/" className={styles.backButton}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Retour
+                </Link>
+
                 {/* Logo */}
                 <div className={styles.logoContainer}>
                     <Image

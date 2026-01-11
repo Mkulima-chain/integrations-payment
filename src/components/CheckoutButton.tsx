@@ -1,18 +1,6 @@
 'use client';
 
-import { loadStripe } from '@stripe/stripe-js';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-
-if (!publishableKey) {
-    console.error(
-        'La clé publique Stripe est manquante. Ajoutez NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY dans votre fichier .env.local'
-    );
-}
-
-const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
 export default function CheckoutButton() {
     const handleCheckout = async () => {
@@ -25,19 +13,12 @@ export default function CheckoutButton() {
                 throw new Error('Network response was not ok');
             }
 
-            const { sessionId } = await response.json();
-            const stripe = await stripePromise;
-
-            if (!stripe) {
-                throw new Error('Stripe failed to initialize.');
-            }
-
-            const { error } = await (stripe as any).redirectToCheckout({
-                sessionId,
-            });
-
-            if (error) {
-                console.warn(error.message);
+            const { url } = await response.json();
+            
+            if (url) {
+                window.location.href = url;
+            } else {
+                throw new Error('Failed to get checkout URL.');
             }
         } catch (error) {
             console.error('Error during checkout:', error);

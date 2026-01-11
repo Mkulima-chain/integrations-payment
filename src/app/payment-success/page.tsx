@@ -1,3 +1,5 @@
+'use client';
+
 export default function PaymentSuccessPage() {
     return (
         <div style={{
@@ -5,7 +7,7 @@ export default function PaymentSuccessPage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%)',
+            backgroundColor: '#f9fafb',
             padding: '24px',
             fontFamily: 'Inter, system-ui, sans-serif',
         }}>
@@ -20,7 +22,7 @@ export default function PaymentSuccessPage() {
                 <div style={{
                     width: '64px',
                     height: '64px',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    backgroundColor: '#ecfdf5',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -36,7 +38,7 @@ export default function PaymentSuccessPage() {
                     >
                         <path
                             d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-                            fill="white"
+                            fill="#10b981"
                         />
                     </svg>
                 </div>
@@ -59,17 +61,26 @@ export default function PaymentSuccessPage() {
                     href="/"
                     style={{
                         display: 'inline-block',
-                        background: 'linear-gradient(135deg, #635bff 0%, #7c3aed 100%)',
+                        backgroundColor: '#10b981',
                         color: 'white',
                         padding: '12px 32px',
                         borderRadius: '8px',
                         textDecoration: 'none',
                         fontWeight: '600',
                         fontSize: '16px',
-                        transition: 'transform 0.2s ease',
+                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)',
+                        transition: 'all 0.2s ease',
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = '#059669';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.3)';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = '#10b981';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.2)';
+                    }}
                 >
                     Return to Home
                 </a>
